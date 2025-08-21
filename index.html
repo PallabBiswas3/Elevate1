@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Dearest! 💚</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Background Music -->
+    <div id="music-control">
+        <button id="toggle-music" class="btn btn--secondary">🎵 Play Our Song</button>
+    </div>
+    
+    <!-- Hidden YouTube Player -->
+    <div id="youtube-player" style="display: none;"></div>
+
+    <!-- Landing Section -->
+    <section id="landing" class="section active">
+        <div class="container">
+            <div class="floating-hearts">
+                <div class="heart">💚</div>
+                <div class="heart">💚</div>
+                <div class="heart">💚</div>
+                <div class="heart">💚</div>
+                <div class="heart">💚</div>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="main-title">Happy Birthday My Dearest! 🌟</h1>
+                <p class="subtitle">For the most amazing artist and mathematician in my heart</p>
+                
+                <div class="countdown-container">
+                    <h2>Days until your special day:</h2>
+                    <div id="countdown" class="countdown-display">
+                        <div class="time-block">
+                            <span id="days">00</span>
+                            <label>Days</label>
+                        </div>
+                        <div class="time-block">
+                            <span id="hours">00</span>
+                            <label>Hours</label>
+                        </div>
+                        <div class="time-block">
+                            <span id="minutes">00</span>
+                            <label>Minutes</label>
+                        </div>
+                        <div class="time-block">
+                            <span id="seconds">00</span>
+                            <label>Seconds</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="welcome-message">
+                    <p>Even though we're miles apart, you're always in my heart 💚</p>
+                    <p>This is my love letter to you, wrapped in code and colored in your favorite dark green</p>
+                </div>
+                
+                <button onclick="showSection('timeline')" class="btn btn--primary">Begin Our Journey ✨</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Love Story Timeline 📖</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>3-4 years ago</h3>
+                        <h4>First Connection</h4>
+                        <p>When two souls found each other across the distance ✨</p>
+                        <div class="equation">Stranger + Stranger = Friends</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>December 2024</h3>
+                        <h4>Everything Changed</h4>
+                        <p>From friends to something beautiful 💚</p>
+                        <div class="equation">Friendship + Time = Love</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>The Proposal</h3>
+                        <h4>World's Most Unique Proposal</h4>
+                        <p>When romance meets logic - interview style! 😅</p>
+                        <div class="equation">Heart + Brain = Unforgettable Memory</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Discovery</h3>
+                        <h4>Finding His Romantic Side</h4>
+                        <p>Behind the logical exterior was a heart full of love 💕</p>
+                        <div class="equation">Logic + Love = Perfect Balance</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('landing')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('quiz')" class="btn btn--primary">Take the Quiz →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="section">
+        <div class="container">
+            <h2 class="section-title">How Well Do You Know Your Studious Boyfriend? 🤓</h2>
+            
+            <div id="quiz-container">
+                <div class="quiz-question" id="question-container">
+                    <h3 id="question-text"></h3>
+                    <div id="options-container"></div>
+                    <button id="submit-answer" class="btn btn--primary" onclick="submitAnswer()">Submit Answer</button>
+                </div>
+                
+                <div class="quiz-result hidden" id="quiz-result">
+                    <h3>Quiz Complete! 🎉</h3>
+                    <p id="final-score"></p>
+                    <p>You know your logical-turned-romantic boyfriend quite well! 💚</p>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('timeline')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('gallery')" class="btn btn--primary">Visit Art Gallery →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Art Gallery Section -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title">For My Artist 🎨</h2>
+            
+            <div class="gallery-content">
+                <div class="drawing-pad">
+                    <h3>Your Digital Canvas</h3>
+                    <canvas id="drawing-canvas" width="400" height="300"></canvas>
+                    <div class="drawing-controls">
+                        <button onclick="clearCanvas()" class="btn btn--secondary">Clear</button>
+                        <input type="color" id="color-picker" value="#2d5a3d">
+                        <input type="range" id="brush-size" min="1" max="20" value="5">
+                    </div>
+                </div>
+                
+                <div class="shayari-corner">
+                    <h3>Your Shayari Corner 📝</h3>
+                    <textarea id="shayari-input" placeholder="Write your beautiful shayari here..."></textarea>
+                    <button onclick="saveShayari()" class="btn btn--primary">Save Poetry</button>
+                    <div id="saved-shayari"></div>
+                </div>
+            </div>
+            
+            <div class="artistic-quotes">
+                <blockquote>"Every line you draw brings color to my world"</blockquote>
+                <blockquote>"Your art speaks the language of my heart"</blockquote>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('quiz')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('travel')" class="btn btn--primary">Dream Together →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Section -->
+    <section id="travel" class="section">
+        <div class="container">
+            <h2 class="section-title">Places We'll Visit Together ✈️</h2>
+            
+            <div class="travel-content">
+                <p>From your village to the world - our love knows no boundaries!</p>
+                
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <h4>Darjeeling 🏔️</h4>
+                        <p>Tea gardens and mountain views</p>
+                        <div class="distance">Distance from heart: 0 km</div>
+                    </div>
+                    <div class="destination-card">
+                        <h4>Kashmir 🌸</h4>
+                        <p>Paradise on earth for our love</p>
+                        <div class="distance">Distance from heart: 0 km</div>
+                    </div>
+                    <div class="destination-card">
+                        <h4>Goa 🏖️</h4>
+                        <p>Beaches and sunset walks</p>
+                        <div class="distance">Distance from heart: 0 km</div>
+                    </div>
+                    <div class="destination-card">
+                        <h4>Kerala 🚤</h4>
+                        <p>Backwaters and romantic boat rides</p>
+                        <div class="distance">Distance from heart: 0 km</div>
+                    </div>
+                    <div class="destination-card">
+                        <h4>Rajasthan 🏰</h4>
+                        <p>Royal palaces and desert adventures</p>
+                        <div class="distance">Distance from heart: 0 km</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('gallery')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('math')" class="btn btn--primary">Love Mathematics →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mathematical Love Section -->
+    <section id="math" class="section">
+        <div class="container">
+            <h2 class="section-title">Mathematical Love 📐💚</h2>
+            
+            <div class="love-equations">
+                <div class="equation-card">
+                    <h3>Distance² + Time² = Love∞</h3>
+                    <p>No distance can measure our infinite love</p>
+                </div>
+                <div class="equation-card">
+                    <h3>You + Me = Perfect Solution</h3>
+                    <p>Together we solve life's greatest equation</p>
+                </div>
+                <div class="equation-card">
+                    <h3>lim(our love) as time→∞ = ∞</h3>
+                    <p>Our love approaches infinity over time</p>
+                </div>
+                <div class="equation-card">
+                    <h3>∫(happiness)dt = You in my life</h3>
+                    <p>You are the integral of all my joy</p>
+                </div>
+            </div>
+            
+            <div class="love-calculator">
+                <h3>Love Calculator 💫</h3>
+                <input type="text" id="calc-input" placeholder="Try any calculation...">
+                <button onclick="calculateLove()" class="btn btn--primary">Calculate</button>
+                <div id="calc-result"></div>
+            </div>
+            
+            <div class="love-graph">
+                <h3>Our Love Over Time 📈</h3>
+                <div class="chart-container" style="position: relative; height: 300px;">
+                    <canvas id="love-chart"></canvas>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('travel')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('gifts')" class="btn btn--primary">Your Gifts →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Gifts Section -->
+    <section id="gifts" class="section">
+        <div class="container">
+            <h2 class="section-title">Virtual Gifts for You 🎁</h2>
+            
+            <div class="gifts-grid">
+                <div class="gift-box" onclick="openGift(this)">
+                    <div class="gift-icon">🎨</div>
+                    <h3>A Digital Sketchbook</h3>
+                    <p class="gift-description hidden">For all the beautiful art you create 🎨</p>
+                </div>
+                <div class="gift-box" onclick="openGift(this)">
+                    <div class="gift-icon">📐</div>
+                    <h3>Mathematical Love Theorem</h3>
+                    <p class="gift-description hidden">Proof that our love = infinity ∞</p>
+                </div>
+                <div class="gift-box" onclick="openGift(this)">
+                    <div class="gift-icon">✈️</div>
+                    <h3>Virtual Travel Tickets</h3>
+                    <p class="gift-description hidden">For all our future adventures together ✈️</p>
+                </div>
+                <div class="gift-box" onclick="openGift(this)">
+                    <div class="gift-icon">🎵</div>
+                    <h3>Collection of Bengali Love Songs</h3>
+                    <p class="gift-description hidden">Starting with our special 80s melody 🎵</p>
+                </div>
+            </div>
+            
+            <div class="final-message">
+                <h3>Until We Meet Face to Face... 💚</h3>
+                <p>Every day brings us closer to that magical moment when distance becomes just a memory.</p>
+                <p>Happy Birthday, my dearest! You've turned this logical mind into a romantic heart.</p>
+                <p class="signature">- Your Studious (but now Romantic) Boyfriend 💕</p>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button onclick="showSection('math')" class="btn btn--secondary">← Back</button>
+                <button onclick="showSection('landing')" class="btn btn--primary">Start Over →</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
