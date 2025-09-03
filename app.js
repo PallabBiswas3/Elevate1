@@ -556,11 +556,23 @@ function calculateLove() {
 
 // Love Chart - Fixed version
 function initializeLoveChart() {
+    // Make sure the chart container is visible
+    const chartContainer = document.querySelector('.love-graph .chart-container');
+    if (chartContainer) {
+        chartContainer.style.display = 'block';
+        chartContainer.style.width = '100%';
+        chartContainer.style.height = '300px';
+    }
+    
     const chartCanvas = document.getElementById('love-chart');
     if (!chartCanvas) {
         console.log('Chart canvas not found');
         return;
     }
+    
+    // Set explicit dimensions for the canvas
+    chartCanvas.width = chartCanvas.offsetWidth;
+    chartCanvas.height = 300;
     
     const ctx = chartCanvas.getContext('2d');
     
@@ -568,15 +580,29 @@ function initializeLoveChart() {
     const months = ['Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025'];
     const loveData = [10, 25, 45, 70, 85, 92, 96, 98, 99, 100]; // Exponential growth
     
-    new Chart(ctx, {
+    // Destroy existing chart instance if it exists
+    if (window.loveChart) {
+        window.loveChart.destroy();
+    }
+    
+    window.loveChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
                 label: 'Love Level (%)',
                 data: loveData,
-                borderColor: '#ffd700',
-                backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                borderColor: '#2d5a3d',
+                borderWidth: 2,
+                backgroundColor: 'rgba(45, 90, 61, 0.1)',
+                tension: 0.4,
+                pointBackgroundColor: '#2d5a3d',
+                pointBorderColor: '#fff',
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: '#2d5a3d',
+                pointHoverBorderColor: '#fff',
+                pointHitRadius: 10,
+                pointBorderWidth: 2,
                 fill: true,
                 tension: 0.4,
                 pointBackgroundColor: '#ffd700',
