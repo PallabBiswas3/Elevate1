@@ -115,49 +115,118 @@ function setupNavigationButtons() {
 
 // YouTube Player Integration
 function initializeYouTubePlayer() {
-    // Load YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    if (window.ytPlayerInitialized) return;
+    
+    // This will be called by the YouTube API when it's ready
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    
+    // Check if the script is already added
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+        // Load the YouTube IFrame Player API code asynchronously
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+    
+    window.ytPlayerInitialized = true;
 }
 
 // YouTube API ready callback
 function onYouTubeIframeAPIReady() {
+    console.log('YouTube API ready');
+    
+    // Create the player container if it doesn't exist
+    let playerElement = document.getElementById('youtube-player');
+    if (!playerElement) {
+        playerElement = document.createElement('div');
+        playerElement.id = 'youtube-player';
+        document.body.appendChild(playerElement);
+    }
+    
     youtubePlayer = new YT.Player('youtube-player', {
-        height: '1',
-        width: '1',
-        videoId: 'S82bAkqqwX4',
+        height: '0',  // Invisible player
+        width: '0',
+        videoId: 'dQw4w9WgXcQ',  // Replace with your YouTube video ID
         playerVars: {
-            'playsinline': 1,
+            'autoplay': 0,
             'controls': 0,
-            'loop': 1,
-            'playlist': 'S82bAkqqwX4'
+            'disablekb': 1,
+            'enablejsapi': 1,
+            'fs': 0,
+            'iv_load_policy': 3,
+            'modestbranding': 1,
+            'playsinline': 1,  // Important for iOS
+            'rel': 0
         },
         events: {
-            'onReady': function(event) {
-                console.log('YouTube player ready');
-            }
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
         }
     });
+}
+
+// Handle player ready event
+function onPlayerReady(event) {
+    console.log('YouTube Player Ready');
+    // Mute the player by default to comply with autoplay policies
+    event.target.mute();
+}
+
+// Handle player state changes
+function onPlayerStateChange(event) {
+    const musicBtn = document.getElementById('toggle-music');
+    
+    // When video ends, reset the button
+    if (event.data === YT.PlayerState.ENDED) {
+        if (musicBtn) {
+            musicBtn.textContent = '🎵 Play Our Song';
+            musicPlaying = false;
+        }
+    }
+    
+    // Log state changes for debugging
+    const states = ['UNSTARTED', 'ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'VIDEO_CUED'];
+    console.log('Player state changed:', states[event.data]);
 }
 
 // Toggle background music
 function toggleMusic() {
     const musicBtn = document.getElementById('toggle-music');
-    if (youtubePlayer && youtubePlayer.playVideo) {
-        if (musicPlaying) {
-            youtubePlayer.pauseVideo();
-            musicBtn.innerHTML = '🎵 Play Our Song';
-            musicPlaying = false;
-        } else {
-            youtubePlayer.playVideo();
-            musicBtn.innerHTML = '🎵 Pause Song';
-            musicPlaying = true;
+    
+    // On mobile, we need to ensure the YouTube iframe is created after user interaction
+    if (!window.ytPlayerInitialized) {
+        initializeYouTubePlayer();
+        // Small delay to ensure the player is ready
+        setTimeout(() => {
+            if (youtubePlayer) {
+                youtubePlayer.playVideo();
+                musicBtn.textContent = '🔊 Our Song Playing';
+                musicPlaying = true;
+            }
+        }, 300);
+        return;
+    }
+    
+    if (!musicPlaying) {
+        // Start playing
+        if (youtubePlayer) {
+            youtubePlayer.playVideo().then(() => {
+                musicBtn.textContent = '🔊 Our Song Playing';
+                musicPlaying = true;
+            }).catch(error => {
+                console.error('Error playing video:', error);
+                musicBtn.textContent = '❌ Tap to Retry';
+                musicPlaying = false;
+            });
         }
     } else {
-        // Fallback if YouTube player isn't ready
-        console.log('YouTube player not ready yet');
+        // Pause playing
+        if (youtubePlayer) {
+            youtubePlayer.pauseVideo();
+            musicBtn.textContent = '🎵 Play Our Song';
+            musicPlaying = false;
+        }
     }
 }
 
